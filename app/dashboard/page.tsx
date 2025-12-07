@@ -1,7 +1,7 @@
-import { AssetsTable } from "./components/AssetsTable";
 import { PortfolioAllocation } from "./components/PortfolioAllocation";
 import { IDEWindow } from "../components/IDEWindow";
 import { CareerChart } from "./components/CareerChart";
+import { AssetsTable } from "../components/AssetsTable";
 
 export default function Dashboard() {
    return (

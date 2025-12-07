@@ -28,8 +28,8 @@ export function Navbar({ isCollapsed }: Props) {
       },
       {
          icon: <Wallet />,
-         href: "/wallets",
-         label: "wallets",
+         href: "/portfolios",
+         label: "Portfolios",
          isCollapsed,
       },
       {

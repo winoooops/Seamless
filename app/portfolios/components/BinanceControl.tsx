@@ -1,12 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import connectBinanceCex from "../api/binance/utils/connectBinanceCex";
+import connectBinanceCex from "../../api/binance/utils/connectBinanceCex";
 
 export function BinanceControl() {
    const [loading, setLoading] = useState(false);
    const [isConnected, setIsConnected] = useState(false);
-   const [timestamp, setTimestamp] = useState<string>('');
+   const [timestamp, setTimestamp] = useState<string>("");
 
    // State for credentials
    const [apiKey, setApiKey] = useState("");
@@ -23,7 +23,7 @@ export function BinanceControl() {
       } catch (err) {
          alert("Failed to connect: " + (err as Error).message);
          setIsConnected(false);
-         setTimestamp('');
+         setTimestamp("");
       } finally {
          setLoading(false);
       }
@@ -35,7 +35,9 @@ export function BinanceControl() {
 
          <div className="mb-4 space-y-2">
             <div>
-               <label className="block text-xs font-medium text-gray-700">API Key</label>
+               <label className="block text-xs font-medium text-gray-700">
+                  API Key
+               </label>
                <input
                   type="text"
                   value={apiKey}
@@ -45,7 +47,9 @@ export function BinanceControl() {
                />
             </div>
             <div>
-               <label className="block text-xs font-medium text-gray-700">API Secret</label>
+               <label className="block text-xs font-medium text-gray-700">
+                  API Secret
+               </label>
                <input
                   type="password"
                   value={apiSecret}
@@ -60,7 +64,9 @@ export function BinanceControl() {
             Connection:
             <span
                className={
-                  isConnected ? "text-green-600 font-bold ml-1" : "text-red-500 ml-1"
+                  isConnected
+                     ? "text-green-600 font-bold ml-1"
+                     : "text-red-500 ml-1"
                }
             >
                {isConnected ? "ACTIVE" : "INACTIVE"}
@@ -78,8 +84,8 @@ export function BinanceControl() {
             {loading
                ? "Connecting..."
                : isConnected
-                  ? "Connected"
-                  : "Connect to Testnet"}
+                 ? "Connected"
+                 : "Connect to Testnet"}
          </button>
       </div>
    );

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Button from "../_components/Button";
 
 export function Header() {
    // const pathString = "/dashboard/portfolio/daily";
@@ -30,9 +31,7 @@ export function Header() {
          </nav>
 
          <div className="flex items-center gap-4">
-            <button className="px-3 py-1.5 text-xs font-medium bg-blue-500/10 text-blue-400 border border-blue-500/20 rounded-md hover:bg-blue-500/20 transition-colors">
-               New Bounty
-            </button>
+            <Button color="primary">New Bounty</Button>
             <div className="h-8 w-8 rounded-full bg-linear-to-tr from-purple-500 to-blue-500 ring-2 ring-white/10" />
          </div>
       </header>

@@ -51,27 +51,15 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
                <div className="px-4 py-2 text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Suggested
                </div>
-               <CommandItem
-                  icon="LayoutDashboard"
-                  label="Go to Dashboard"
-                  shortcut="Cmd+1"
-               />
-               <CommandItem
-                  icon="LineChart"
-                  label="View Performance"
-                  shortcut="Cmd+2"
-               />
-               <CommandItem
-                  icon="Wallet"
-                  label="Manage Accounts"
-                  shortcut="Cmd+3"
-               />
+               <CommandItem label="Go to Dashboard" shortcut="Cmd+1" />
+               <CommandItem label="View Performance" shortcut="Cmd+2" />
+               <CommandItem label="Manage Accounts" shortcut="Cmd+3" />
                <div className="my-2 border-t border-white/5" />
                <div className="px-4 py-2 text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Actions
                </div>
-               <CommandItem icon="Plus" label="New Transaction" />
-               <CommandItem icon="RefreshCw" label="Refresh Prices" />
+               <CommandItem label="New Transaction" />
+               <CommandItem label="Refresh Prices" />
             </div>
          </div>
          <div className="absolute inset-0 -z-10" onClick={onClose} />

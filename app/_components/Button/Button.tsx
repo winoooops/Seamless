@@ -3,7 +3,7 @@
 import { ComponentProps, FC } from "react";
 import { tv, VariantProps } from "tailwind-variants/lite";
 
-const button = tv({
+export const button = tv({
    base: "rounded-md cursor-pointer transition-all disabled:cursor-not-allowed disabled:opacity-60",
    variants: {
       size: {

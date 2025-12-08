@@ -1,0 +1,36 @@
+# Seamless Project Guidelines
+
+## Testing Best Practices
+
+### 1. Inline Declarations (The "Inline" Rule)
+**Principle**: Tests should be self-contained and readable from top to bottom. Avoid shared state or "reusable" selection logic within test files.
+
+**Do:**
+- Query elements directly inside your `expect` assertions.
+- Use `screen.getBy*` inline.
+- Keep tests independent.
+
+**Don't:**
+- Declare `let element;` at the top of a `describe` block.
+- Use `beforeEach` to assign DOM elements to variables.
+
+**Example:**
+```tsx
+// ✅ Correct
+test("renders input", () => {
+   render(<Input />);
+   expect(screen.getByRole("textbox")).toBeInTheDocument();
+});
+
+// ❌ Avoid
+describe("Input", () => {
+   let textbox;
+   beforeEach(() => {
+      render(<Input />);
+      textbox = screen.getByRole("textbox");
+   });
+   test("renders", () => {
+      expect(textbox).toBeInTheDocument();
+   });
+});
+```

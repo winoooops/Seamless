@@ -9,11 +9,15 @@ export const button = tv({
       size: {
          sm: "px-3 py-1.5 text-xs font-medium",
          md: "px-4 py-2 text-sm",
+         lg: "p-4 text-md font-bold",
       },
       color: {
          primary:
-            "bg-blue-500/10 text-blue-400 border border-blue-500/20 hover:bg-blue-500/20",
+            "bg-gradient-to-r from-cyan-200 to-blue-300 text-black border-none hover:opacity-90 hover:scale-[1.02] shadow-lg shadow-cyan-500/20 font-semibold",
          outline: "bg-transparent border border-white/10",
+         transparent: "bg-transparent border-0",
+         nav: "bg-transparent text-neutral-400 hover:text-white hover:bg-white/5 border-none justify-start",
+         navActive: "texture-active text-white border-none justify-start font-medium",
       },
       isFullWidth: {
          true: "w-full",

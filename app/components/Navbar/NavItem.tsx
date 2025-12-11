@@ -1,3 +1,4 @@
+import Button from "@/app/_components/Button";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ComponentProps, ReactNode } from "react";
@@ -12,22 +13,20 @@ export function NavItem({ icon, label, isCollapsed, ...others }: Props) {
    const active = usePathname().startsWith(others.href.toString());
 
    return (
-      <button
-         className={`w-full rounded-md transition-all duration-200 ${
-            active
-               ? "bg-blue-500/10 text-blue-400"
-               : "text-gray-400 hover:bg-white/5 hover:text-white"
-         }`}
+      <Button
+         isFullWidth
+         color={active ? "navActive" : "nav"}
+         size="lg"
          role="group"
       >
          <Link
             href={others.href}
-            className={`flex items-center ${isCollapsed ? "justify-center" : "justify-start"} gap-6 px-6 py-4`}
+            className={`flex space-x-4 items-center ${isCollapsed ? "justify-center" : "justify-start"}`}
             role="link"
             aria-label={`Main Menu Item ${label}`}
          >
             <div
-               className={`w-5 h-5 flex items-center justify-center ${active ? "text-blue-400" : "text-gray-500 group-hover:text-white"}`}
+               className={`w-5 h-5 flex items-center justify-center`}
             >
                {icon}
             </div>
@@ -38,6 +37,6 @@ export function NavItem({ icon, label, isCollapsed, ...others }: Props) {
                </span>
             )}
          </Link>
-      </button>
+      </Button>
    );
 }

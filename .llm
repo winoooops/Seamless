@@ -34,3 +34,38 @@ describe("Input", () => {
    });
 });
 ```
+
+### 2. Inline Mock Data
+**Principle**: Tests should be readable without scrolling up to find variable definitions. Define mock data directly inside the `render` call or test function.
+
+**Do:**
+```tsx
+test("renders options", () => {
+   render(
+      <Dropdown
+         options={[{ label: "A", value: "a" }]}
+         // ...
+      />
+   );
+});
+```
+
+**Don't:**
+```tsx
+const options = [{ label: "A", value: "a" }]; // Defined outside
+test("renders options", () => {
+   render(<Dropdown options={options} />);
+});
+```
+
+### 3. A11y First Queries
+**Principle**: Tests should mimic how a user (including screen readers) interacts with the application. Prefer role-based queries over text or class lookups.
+
+**Do:**
+- `screen.getByRole("button", { name: "Submit" })`
+- `screen.getByRole("option", { name: "Option 1" })`
+
+**Don't:**
+- `screen.getByText("Submit")` (less precise)
+- `container.querySelector(".btn-primary")` (avoid implementation details)
+

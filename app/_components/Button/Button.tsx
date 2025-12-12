@@ -9,7 +9,7 @@ export const button = tv({
       size: {
          sm: "px-3 py-1.5 text-xs font-medium",
          md: "px-4 py-2 text-sm",
-         lg: "p-4 text-md font-bold",
+         lg: "px-4 py-2 text-md font-bold",
       },
       color: {
          primary:
@@ -17,7 +17,8 @@ export const button = tv({
          outline: "bg-transparent border border-white/10",
          transparent: "bg-transparent border-0",
          nav: "bg-transparent text-neutral-400 hover:text-white hover:bg-white/5 border-none justify-start",
-         navActive: "texture-active text-white border-none justify-start font-medium",
+         navActive:
+            "texture-active text-white border-none justify-start font-medium",
       },
       isFullWidth: {
          true: "w-full",

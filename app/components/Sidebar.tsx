@@ -1,13 +1,13 @@
+import { ComponentProps } from "react";
 import Button from "../_components/Button";
-import { Navbar } from "./Navbar";
 import { PanelLeft } from "lucide-react";
 
-interface Props {
+type Props = ComponentProps<"aside"> & {
    isCollapsed: boolean;
    toggle: () => void;
-}
+};
 
-export function Sidebar({ isCollapsed, toggle }: Props) {
+export function Sidebar({ children, isCollapsed, toggle }: Props) {
    return (
       <aside
          className={`${
@@ -24,9 +24,7 @@ export function Sidebar({ isCollapsed, toggle }: Props) {
                <PanelLeft size={16} />
             </Button>
          </div>
-
-         <Navbar isCollapsed={isCollapsed} />
-
+         {children}
          <div className="h-14 flex items-center px-4 border-b border-white/5">
             <div className="font-bold text-xl tracking-tight bg-linear-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
                {isCollapsed ? "S" : "SEAMLESS"}

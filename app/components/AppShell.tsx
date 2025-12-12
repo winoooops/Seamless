@@ -5,6 +5,7 @@ import { CommandPalette } from "./CommandPalette/CommandPalette";
 import { Sidebar } from "./Sidebar";
 import { useKeyMap } from "../hooks/useKeymap";
 import { Header } from "./Header";
+import { Navbar } from "./Navbar";
 
 interface LayoutProps {
    children: React.ReactNode;
@@ -23,11 +24,12 @@ export function AppShell({ children }: LayoutProps) {
          <Sidebar
             isCollapsed={isSidebarCollapsed}
             toggle={() => setIsSidebarOpen((prev) => !prev)}
-         />
+         >
+            <Navbar isCollapsed={isSidebarCollapsed} />
+         </Sidebar>
 
          <div className="flex-1 flex flex-col min-w-0">
             <Header />
-
             <main className="flex-1 overflow-hidden p-6 relative">
                <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-size[24px_24px] pointer-events-none" />
                <div className="relative h-full z-10">{children}</div>

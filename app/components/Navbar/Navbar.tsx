@@ -47,7 +47,7 @@ export function Navbar({ isCollapsed }: Props) {
    ];
 
    return (
-      <nav aria-label="Main Menu" className="flex-1 py-4 px-2 space-y-1">
+      <nav aria-label="Main Menu" className="flex-1 py-4 px-2 space-y-4">
          {items.map((item) => (
             <NavItem key={item.label} {...item} />
          ))}

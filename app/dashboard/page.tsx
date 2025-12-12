@@ -21,11 +21,15 @@ export default function Dashboard() {
             total={123000}
             action={
                <div className="h-full flex flex-col items-start justify-between space-y-4">
-                  <select value={currency}>
-                     <option value="USD" label="USD" selected />
+                  {/*<select
+                     value={currency}
+                     defaultValue="USD"
+                     onChange={() => {}}
+                  >
+                     <option value="USD" label="USD" />
                      <option value="EUR" label="EUR" />
                      <option value="CNY" label="CNY" />
-                  </select>
+                  </select>*/}
 
                   <div className="space-x-2">
                      <Button color="primary">Connect Wallet</Button>

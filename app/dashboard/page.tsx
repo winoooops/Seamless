@@ -5,20 +5,12 @@ import { CareerChart } from "./components/CareerChart";
 import { AssetsTable } from "../components/AssetsTable";
 import { BentoGrid } from "../_components/Bento/BentoGrid";
 import { BentoCard } from "../_components/Bento/BentoCard";
-import {
-   ChevronDown,
-   LayoutDashboard,
-   PieChart,
-   TrendingUp,
-} from "lucide-react";
+import { LayoutDashboard, PieChart, TrendingUp } from "lucide-react";
 import { Banner } from "../components/Banner";
-import { UseLocale } from "../localeProvider";
 import Button from "../_components/Button";
-import Dropdown from "../_components/Dropdown";
+import CurrencyDropdown from "../components/CurrencyDropdown";
 
 export default function Dashboard() {
-   const { currency, currencies, updateCurrency } = UseLocale();
-
    return (
       <div className="p-4 md:p-8 min-h-screen">
          <Banner
@@ -27,11 +19,7 @@ export default function Dashboard() {
             total={123000}
             action={
                <div className="h-full flex flex-col items-start justify-between space-y-4">
-                  <Dropdown
-                     value={currency}
-                     options={currencies}
-                     onChange={(val) => updateCurrency(val)}
-                  />
+                  <CurrencyDropdown />
                   <Button color="primary" className="w-30">
                      Connect Wallet
                   </Button>

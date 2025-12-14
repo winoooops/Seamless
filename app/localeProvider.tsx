@@ -24,7 +24,7 @@ const LocalContext = createContext<LocalContextType>(defaultContext);
 export function LocaleProvider({ children }: { children: ReactNode }) {
    const currencies = useCurrencies();
    const [locale, setLocale] = useState<string>("en-us");
-   const [currency, setCurrency] = useState<string>("USD");
+   const [currency, setCurrency] = useState<string>("usd");
 
    const updateLocale = (locale: string) => setLocale(locale);
 

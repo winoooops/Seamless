@@ -1,114 +1,100 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, test, vi } from "vitest";
-import Dropdown from "./Dropdown";
+import Dropdown, { Menu, MenuItem, Trigger } from "./index";
 
 describe("Dropdown", () => {
    test("renders with initial value", () => {
       render(
-         <Dropdown
-            options={[
-               { label: "Option 1", value: "opt1" },
-               { label: "Option 2", value: "opt2" },
-               { label: "Option 3", value: "opt3" },
-            ]}
-            value="opt1"
-            onChange={() => {}}
-         />,
+         <Dropdown value="opt1" onSelect={() => {}}>
+            <Trigger>
+               <span>opt1</span>
+            </Trigger>
+            <Menu>
+               <MenuItem value="opt1" label="Option 1" />
+            </Menu>
+         </Dropdown>,
       );
-      expect(screen.getByText("Option 1")).toBeInTheDocument();
+
+      expect(screen.getByRole("group")).toBeInTheDocument();
+      expect(
+         within(screen.getByRole("group")).getByRole("button", {
+            name: "opt1",
+         }),
+      ).toBeInTheDocument();
    });
 
-   test("toggles options list on click", async () => {
+   test("calls onSelect when item is clicked", async () => {
       const user = userEvent.setup();
+      const handleSelect = vi.fn();
+
       render(
-         <Dropdown
-            options={[
-               { label: "Option 1", value: "opt1" },
-               { label: "Option 2", value: "opt2" },
-               { label: "Option 3", value: "opt3" },
-            ]}
-            value="opt1"
-            onChange={() => {}}
-         />,
+         <Dropdown value="opt1" onSelect={handleSelect}>
+            <Trigger>
+               <span>Select</span>
+            </Trigger>
+            <Menu>
+               <MenuItem value="opt1" label="Option 1" />
+               <MenuItem value="opt2" label="Option 2" />
+            </Menu>
+         </Dropdown>,
       );
 
-      expect(screen.queryByRole("option")).not.toBeInTheDocument();
-
-      await user.click(screen.getByRole("button", { name: "Option 1" }));
-      expect(screen.getAllByRole("option")).toHaveLength(3);
-
-      await user.click(screen.getByRole("button", { name: "Option 1" }));
-      expect(screen.queryByRole("option")).not.toBeInTheDocument();
-   });
-
-   test("calls onChange when option is selected", async () => {
-      const user = userEvent.setup();
-      const handleChange = vi.fn();
-      render(
-         <Dropdown
-            options={[
-               { label: "Option 1", value: "opt1" },
-               { label: "Option 2", value: "opt2" },
-               { label: "Option 3", value: "opt3" },
-            ]}
-            value="opt1"
-            onChange={handleChange}
-         />,
-      );
-
-      await user.click(screen.getByRole("button", { name: "Option 1" }));
+      await user.click(screen.getByRole("button", { name: "Select" }));
 
       await user.click(screen.getByRole("option", { name: "Option 2" }));
 
-      expect(handleChange).toHaveBeenCalledWith("opt2");
-      expect(handleChange).toHaveBeenCalledTimes(1);
+      expect(handleSelect).toHaveBeenCalledWith("opt2");
+      expect(handleSelect).toHaveBeenCalledTimes(1);
    });
 
-   test("closes dropdown after selection", async () => {
+   test("toggles menu visibility on trigger click", async () => {
       const user = userEvent.setup();
       render(
-         <Dropdown
-            options={[
-               { label: "Option 1", value: "opt1" },
-               { label: "Option 2", value: "opt2" },
-               { label: "Option 3", value: "opt3" },
-            ]}
-            value="opt1"
-            onChange={() => {}}
-         />,
+         <Dropdown value="opt1" onSelect={() => {}}>
+            <Trigger>
+               <span>Select</span>
+            </Trigger>
+            <Menu>
+               <MenuItem value="opt1" label="Option 1" />
+            </Menu>
+         </Dropdown>,
       );
 
-      await user.click(screen.getByRole("button", { name: "Option 1" }));
+      expect(screen.queryByRole("listbox")).not.toBeInTheDocument();
+
+      await user.click(screen.getByRole("button", { name: "Select" }));
+      expect(screen.getByRole("listbox")).toBeInTheDocument();
       expect(
-         screen.getByRole("option", { name: "Option 2" }),
+         screen.getByRole("option", { name: "Option 1" }),
       ).toBeInTheDocument();
 
-      await user.click(screen.getByRole("option", { name: "Option 2" }));
+      await user.click(screen.getByRole("button", { name: "Select" }));
       expect(screen.queryByRole("listbox")).not.toBeInTheDocument();
    });
 
-   test("highlights selected option", async () => {
+   test("aria-controls correctly syncs up between Trigger and Menu", async () => {
       const user = userEvent.setup();
+
       render(
-         <Dropdown
-            options={[
-               { label: "Option 1", value: "opt1" },
-               { label: "Option 2", value: "opt2" },
-               { label: "Option 3", value: "opt3" },
-            ]}
-            value="opt2"
-            onChange={() => {}}
-         />,
+         <Dropdown value="opt1" onSelect={() => {}}>
+            <Trigger>
+               <span>Select</span>
+            </Trigger>
+            <Menu>
+               <MenuItem value="opt1" label="Option 1" />
+            </Menu>
+         </Dropdown>,
       );
 
-      await user.click(screen.getByRole("button", { name: "Option 2" }));
+      const trigger = screen.getByRole("button", { name: "Select" });
+      expect(trigger).toHaveAttribute("aria-haspopup", "listbox");
+      expect(trigger).toHaveAttribute("aria-expanded", "false");
 
-      const selectedOption = screen.getByRole("option", { name: "Option 2" });
-      expect(selectedOption).toHaveClass("text-emerald-500");
-      expect(selectedOption).toHaveClass("bg-emerald-500/5");
+      await user.click(trigger);
+      expect(trigger).toHaveAttribute("aria-expanded", "true");
 
-      const unselectedOption = screen.getByRole("option", { name: "Option 1" });
-      expect(unselectedOption).toHaveClass("text-neutral-300");
+      const listbox = screen.getByRole("listbox");
+      expect(trigger).toHaveAttribute("aria-controls", listbox.id);
    });
 });

@@ -17,6 +17,6 @@ describe("useCurrencies", () => {
       fetcher,
     );
 
-    expect(result.current).toEqual(data);
+    expect(result.current.data).toEqual(data);
   });
 });

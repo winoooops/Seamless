@@ -5,6 +5,7 @@ const schema = z.array(
   z.object({
     value: z.string(),
     label: z.string(),
+    logo: z.string(),
   }),
 );
 
@@ -14,16 +15,29 @@ export const fetcher = async (url: string): Promise<Schema> =>
   fetch(url)
     .then((res) => res.json())
     .then((data) =>
-      schema.parse(data.map((item: string) => ({ value: item, label: item }))),
+      schema.parse(
+        data.map((item: string) => ({
+          value: item,
+          label: item,
+          logo: `https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons/128/color/${item.toLowerCase()}.png`,
+        })),
+      ),
     );
 
-const useCurrencies = (): Awaited<ReturnType<typeof fetcher>> => {
-  const { data, error } = useSWR("/api/coingecko/currencies", fetcher);
+const useCurrencies = () => {
+  const { data, error, isLoading } = useSWR(
+    "/api/coingecko/currencies",
+    fetcher,
+  );
   if (error) {
     console.error(error);
   }
 
-  return data ?? [];
+  return {
+    data: data || [],
+    error,
+    isLoading,
+  };
 };
 
 export default useCurrencies;

@@ -5,24 +5,16 @@ import useCurrencies from "./api/coingecko/_hooks/useCurrencies";
 
 interface LocalContextType {
    locale: string;
-   currency: string;
-   currencies: ReturnType<typeof useCurrencies>;
+   currency: ReturnType<typeof useCurrencies>["data"][number] | undefined;
+   currencies: ReturnType<typeof useCurrencies>["data"];
    updateLocale: (locale: string) => void;
    updateCurrency: (currency: string) => void;
 }
 
-const defaultContext: LocalContextType = {
-   locale: "en-us",
-   currency: "USD",
-   currencies: [],
-   updateLocale: () => {},
-   updateCurrency: () => {},
-};
-
-const LocalContext = createContext<LocalContextType>(defaultContext);
+const LocalContext = createContext<LocalContextType | undefined>(undefined);
 
 export function LocaleProvider({ children }: { children: ReactNode }) {
-   const currencies = useCurrencies();
+   const { data: currencies } = useCurrencies();
    const [locale, setLocale] = useState<string>("en-us");
    const [currency, setCurrency] = useState<string>("usd");
 
@@ -30,9 +22,17 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
 
    const updateCurrency = (currency: string) => setCurrency(currency);
 
+   const activeCurrency = currencies?.find((item) => item.label === currency);
+
    return (
       <LocalContext.Provider
-         value={{ locale, currency, currencies, updateCurrency, updateLocale }}
+         value={{
+            locale,
+            currency: activeCurrency,
+            currencies,
+            updateCurrency,
+            updateLocale,
+         }}
       >
          {children}
       </LocalContext.Provider>

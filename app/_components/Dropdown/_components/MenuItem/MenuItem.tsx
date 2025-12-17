@@ -3,7 +3,7 @@ import Button from "../../../Button";
 import { twMerge } from "tailwind-merge";
 import { useDropdown } from "../../_context";
 
-type Props = ComponentProps<typeof Button> & {
+type Props = Omit<ComponentProps<typeof Button>, "prefix" | "suffix"> & {
    value: string;
    label: string;
    prefix?: ReactNode;
@@ -22,6 +22,7 @@ const MenuItem: FC<Props> = ({
    return (
       <Button
          role="option"
+         isFullWidth
          aria-selected={value === selectedValue}
          color="transparent"
          className={twMerge(
@@ -39,7 +40,7 @@ const MenuItem: FC<Props> = ({
          {...others}
       >
          <div role="presentation">{prefix}</div>
-         {label}
+         <div className="uppercase">{label}</div>
          <div role="presentation">{suffix}</div>
       </Button>
    );

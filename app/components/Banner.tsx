@@ -13,7 +13,10 @@ type Props = ComponentProps<"div"> & {
 
 export const Banner: FC<Props> = ({ username, total, action, className }) => {
    const { currency, locale } = UseLocale();
-   const worth = formatMoney(total, { currency, locale });
+   const worth = formatMoney(total, {
+      currency: currency?.value ?? "usd",
+      locale,
+   });
 
    return (
       <div
